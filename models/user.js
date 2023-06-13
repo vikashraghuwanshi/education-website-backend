@@ -10,7 +10,11 @@ const userSchema = new mongoose.Schema({
   firstname: String,
   lastname: String,
   passwordHash: String,
-  login_by: String
+  login_by: String,
+  verified: {
+    type: Boolean,
+    default: false
+  }
 })
 
 // userSchema.plugin(uniqueValidator)
