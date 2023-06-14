@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer')
 const config = require('../utils/config')
 
-module.exports = async (email, subject, text) => {
+module.exports = async (email, subject, html) => {
   try {
     const transporter = nodemailer.createTransport({
       // host: config.HOST,
@@ -18,7 +18,7 @@ module.exports = async (email, subject, text) => {
       from: config.EMAIL_USER,
       to: email,
       subject: subject,
-      text: text
+      html: html
     })
 
     console.log('Email sent successfully!!!')

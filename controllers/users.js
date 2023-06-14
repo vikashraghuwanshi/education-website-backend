@@ -31,7 +31,9 @@ usersRouter.post('/', async (request, response) => {
           response.status(201).json(updatedUser)
         })
     } else {
-      return response.status(400).json({ ok: false, msg: 'User Already Exists' })
+      return response.status(400).json({
+        error : 'Email Already Exists!!!'
+      })
     }
 
   } else {
@@ -41,11 +43,16 @@ usersRouter.post('/', async (request, response) => {
       token: crypto.randomBytes(32).toString('hex')
     }).save()
 
-    const url = `${config.BASE_URL}users/${user._id}/verify/${token.token}`
+    const verification_link = `${config.FRONTEND_HOST}/users/${user._id}/verify/${token.token}`
+    const html =   `Hi ${user.firstname} ${user.lastname},<br><br><p>Please click 
+      <a href='${ verification_link }'>here</a> to verify your email</p><br>Best Regards,
+      <br>Team XYZ`
 
-    await sendEmail(user.email, 'Verify Email', url)
+    await sendEmail(user.email, 'Email Verification Link', html)
 
-    return response.status(201).json('Email sent to your account. Please verify')
+    return response.status(401).json({
+      error: 'Verification link sent to your email. Please verify!!!'
+    })
   }
 })
 

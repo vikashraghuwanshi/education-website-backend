@@ -8,6 +8,8 @@ const verifyRouter = require('./controllers/verify')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
+const path = require('path')
+
 
 mongoose.set('strictQuery', false)
 
@@ -26,9 +28,31 @@ app.use(express.static('build'))
 app.use(express.json())
 app.use(middleware.requestLogger)
 
-app.use('/users', verifyRouter)
+app.use('/api/users', verifyRouter)
 app.use('/api/login-user', loginRouter)
 app.use('/api/add-user', usersRouter)
+
+
+// Handle all other routes and return the main React application
+app.get('/sign-in', (req, res) => {
+  // eslint-disable-next-line no-undef
+  res.sendFile(path.join(__dirname, 'build', 'index.html'))
+})
+
+app.get('/sign-up', (req, res) => {
+  // eslint-disable-next-line no-undef
+  res.sendFile(path.join(__dirname, 'build', 'index.html'))
+})
+
+app.get('/quiz', (req, res) => {
+  // eslint-disable-next-line no-undef
+  res.sendFile(path.join(__dirname, 'build', 'index.html'))
+})
+
+app.get('/users/:id/verify/:token', (req, res) => {
+  // eslint-disable-next-line no-undef
+  res.sendFile(path.join(__dirname, 'build', 'index.html'))
+})
 
 
 app.use(middleware.unknownEndpoint)

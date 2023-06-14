@@ -3,7 +3,8 @@ require('dotenv').config()
 
 const PORT = process.env.PORT
 const MONGODB_URI = process.env.MONGODB_URI
-const BASE_URL = process.env.BASE_URL
+const BACKEND_HOST = process.env.BACKEND_HOST
+const FRONTEND_HOST = process.env.FRONTEND_HOST
 const HOST = process.env.HOST
 const SERVICE = process.env.SERVICE
 const EMAIL_PORT=process.env.EMAIL_PORT
@@ -14,7 +15,8 @@ const PASS=process.env.PASS
 module.exports = {
   MONGODB_URI,
   PORT,
-  BASE_URL,
+  BACKEND_HOST,
+  FRONTEND_HOST,
   HOST,
   SERVICE,
   EMAIL_PORT,
