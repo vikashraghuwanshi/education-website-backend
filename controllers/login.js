@@ -14,14 +14,20 @@ loginRouter.post('/', async (request, response) => {
 
   var user = await User.findOne({ email })
 
-  if(!user && login_by === 'google') {
+  if(login_by === 'google') {
     // create user if user not present
-    const passwordHash = ''
-    const newUser = new User({
-      email, firstname, lastname, passwordHash, login_by
-    })
+    if(!user) {
+      const passwordHash = ''
+      const verified = true
+      const newUser = new User({
+        email, firstname, lastname, passwordHash, login_by, verified
+      })
 
-    user = await newUser.save()
+      user = await newUser.save()
+    } else {
+      user.verified = true
+      await User.findByIdAndUpdate(user._id, user)
+    }
 
   } else if(!user) {
     return response.status(401).json({
