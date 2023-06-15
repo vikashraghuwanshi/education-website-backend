@@ -28,7 +28,6 @@ loginRouter.post('/', async (request, response) => {
       user.verified = true
       await User.findByIdAndUpdate(user._id, user)
     }
-
   } else if(!user) {
     return response.status(401).json({
       error: 'Invalid Email or Password!!!'
