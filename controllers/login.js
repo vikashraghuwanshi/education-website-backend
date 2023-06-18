@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 const loginRouter = require('express').Router()
 const User = require('../models/user')
 const Token = require('../models/token')
-const sendEmail = require('./sendEmail')
+const sendEmail = require('../utils/send_email')
 const crypto = require('crypto')
 const config = require('../utils/config')
 
@@ -57,7 +57,7 @@ loginRouter.post('/', async (request, response) => {
         token: crypto.randomBytes(32).toString('hex')
       }).save()
 
-      console.log(config.FRONTEND_HOST)
+      console.log('Frontend Host:- ' + config.FRONTEND_HOST)
       const verification_link = `${config.FRONTEND_HOST}/users/${user._id}/verify/${token.token}`
       console.log(verification_link)
 

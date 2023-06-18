@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer')
-const config = require('../utils/config')
+const config = require('./config')
 
 module.exports = async (email, subject, html) => {
   try {

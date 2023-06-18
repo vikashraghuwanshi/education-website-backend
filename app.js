@@ -2,13 +2,16 @@ const config = require('./utils/config')
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const frontendRoutesRouter = require('./controllers/frontend_routes')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 const verifyRouter = require('./controllers/verify')
+const changePasswordRouter = require('./controllers/change_password')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
-const path = require('path')
+const resetLinkVerifyRouter = require('./controllers/reset_link_verify')
+
 
 
 mongoose.set('strictQuery', false)
@@ -31,28 +34,12 @@ app.use(middleware.requestLogger)
 app.use('/api/users', verifyRouter)
 app.use('/api/login-user', loginRouter)
 app.use('/api/add-user', usersRouter)
+app.use('/api/update-password', changePasswordRouter)
+app.use('/api/reset-link-verify', resetLinkVerifyRouter)
 
 
 // Handle all other routes and return the main React application
-app.get('/sign-in', (req, res) => {
-  // eslint-disable-next-line no-undef
-  res.sendFile(path.join(__dirname, 'build', 'index.html'))
-})
-
-app.get('/sign-up', (req, res) => {
-  // eslint-disable-next-line no-undef
-  res.sendFile(path.join(__dirname, 'build', 'index.html'))
-})
-
-app.get('/quiz', (req, res) => {
-  // eslint-disable-next-line no-undef
-  res.sendFile(path.join(__dirname, 'build', 'index.html'))
-})
-
-app.get('/users/:id/verify/:token', (req, res) => {
-  // eslint-disable-next-line no-undef
-  res.sendFile(path.join(__dirname, 'build', 'index.html'))
-})
+app.use('*', frontendRoutesRouter)
 
 
 app.use(middleware.unknownEndpoint)
