@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 const resetLinkVerifyRouter = require('express').Router()
+const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 const Token = require('../models/token')
 
@@ -9,21 +10,30 @@ resetLinkVerifyRouter.get('/:id/forgot/:token', async(request, response) => {
     let user = await User.findOne({ _id: request.params.id })
     if(!user) return response.status(400).json('Invalid Link')
 
-    const token = await Token.findOne({
+    const verify_token = await Token.findOne({
       userId: user._id,
       token: request.params.token
     })
 
-    if(!token) return response.status(400).json('Invalid Link')
+    if(!verify_token) return response.status(400).json('Invalid Link')
 
     user.verified = true
     await User.findByIdAndUpdate(user._id, user)
 
     console.log(request.params.token)
 
-    await token.remove()
+    await verify_token.remove()
 
-    response.status(200).send({ id: user._id })
+    const userForToken = {
+      email: user.email,
+      id: user._id,
+    }
+
+    const token = jwt.sign(userForToken, process.env.SECRET)
+
+    response
+      .status(200)
+      .send({ token })
   } catch(error) {
     return response.status(400).json('Internal Server Error')
   }

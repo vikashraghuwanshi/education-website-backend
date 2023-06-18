@@ -23,6 +23,7 @@ const getTokenFrom = request => {
 // logged in user password change
 changePasswordRouter.post('/', async(request, response) => {
 
+
   const { password } = request.body
 
   try {
@@ -39,6 +40,7 @@ changePasswordRouter.post('/', async(request, response) => {
     let user = await User.findOne({ email })
     user.passwordHash = passwordHash
     await User.findByIdAndUpdate(user._id, user)
+
 
     response.status(200).send('Password Changed Successfully!!!')
   } catch(error) {
@@ -80,35 +82,6 @@ changePasswordRouter.post('/forgot', async(request, response) => {
 
     response.status(200).send('Reset link sent to your email successfully!!!')
 
-  } catch(error) {
-    return response.status(400).json({
-      error: 'Internal Server Error'
-    })
-  }
-})
-
-
-
-
-changePasswordRouter.post('/reset', async(request, response) => {
-
-  const { password, id } = request.body
-
-  try {
-    let user = await User.findOne({ _id: id })
-    if(!user) {
-      return response.status(400).json({
-        error: 'Invalid Link'
-      })
-    }
-
-    const saltRounds = 10
-    const passwordHash = await bcrypt.hash(password, saltRounds)
-
-    user.passwordHash = passwordHash
-    await User.findByIdAndUpdate(user._id, user)
-
-    response.status(200).send('Password Changed Successfully!!!')
   } catch(error) {
     return response.status(400).json({
       error: 'Internal Server Error'
