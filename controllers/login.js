@@ -4,9 +4,11 @@ const bcrypt = require('bcrypt')
 const loginRouter = require('express').Router()
 const User = require('../models/user')
 const Token = require('../models/token')
-const sendEmail = require('../utils/send_email')
+const sendEmail = require('../clients/send_email')
 const crypto = require('crypto')
 const config = require('../utils/config')
+
+
 
 loginRouter.post('/', async (request, response) => {
   const { email, firstname, lastname, password, login_by } = request.body

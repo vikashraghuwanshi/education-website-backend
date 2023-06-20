@@ -11,6 +11,9 @@ const EMAIL_PORT=process.env.EMAIL_PORT
 const SECURE=process.env.SECURE
 const EMAIL_USER=process.env.EMAIL_USER
 const PASS=process.env.PASS
+const TWILIO_ACCOUNT_SID=process.env.TWILIO_ACCOUNT_SID
+const TWILIO_AUTH_TOKEN=process.env.TWILIO_AUTH_TOKEN
+const TWILIO_SERVICE_SID=process.env.TWILIO_SERVICE_SID
 
 module.exports = {
   MONGODB_URI,
@@ -22,5 +25,8 @@ module.exports = {
   EMAIL_PORT,
   SECURE,
   EMAIL_USER,
-  PASS
+  PASS,
+  TWILIO_ACCOUNT_SID,
+  TWILIO_AUTH_TOKEN,
+  TWILIO_SERVICE_SID
 }

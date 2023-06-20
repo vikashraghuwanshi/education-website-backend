@@ -4,7 +4,7 @@ const User = require('../models/user')
 const Token = require('../models/token')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-const sendEmail = require('../utils/send_email')
+const sendEmail = require('../clients/send_email')
 const crypto = require('crypto')
 const config = require('../utils/config')
 
@@ -52,8 +52,12 @@ changePasswordRouter.post('/', async(request, response) => {
 
 
 
-// users forgot password
+
+// users forgot password sending reset link
 changePasswordRouter.post('/forgot', async(request, response) => {
+
+
+  console.log('In /forgot')
 
   const { email } = request.body
 
