@@ -38,6 +38,4 @@ sendOtpPhoneRouter.post('/verify', async (request, response) => {
 })
 
 
-
-
 module.exports = sendOtpPhoneRouter

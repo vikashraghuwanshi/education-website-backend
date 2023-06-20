@@ -26,7 +26,7 @@ async function sendOtpToPhone(phone) {
 
   } catch(error) {
     console.log('Error in sendOtpPhone Client utils: ' + error.message)
-    throw new Error('Failed to verify OTP')
+    throw new Error('Failed to send OTP')
   }
 }
 
