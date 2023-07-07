@@ -1,11 +1,11 @@
-const otpToPhoneClient = require('../clients/send_otp_phone')
+const phoneOtpClient = require('../clients/phone_otp_client')
 
 
 
-async function sendOtpPhoneService(phone) {
+async function sendOtpToPhoneService(phone) {
+
   try {
-
-    const result = await otpToPhoneClient.sendOtpToPhone(phone)
+    const result = await phoneOtpClient.sendOtpToPhone(phone)
 
     if (result.success) {
       return { success: true, message: 'OTP sent successfully' }
@@ -22,7 +22,7 @@ async function sendOtpPhoneService(phone) {
 async function verifyPhoneOTPService(phone, code) {
   try {
 
-    await otpToPhoneClient.verifyPhoneOTP(phone, code)
+    await phoneOtpClient.verifyPhoneOTP(phone, code)
     return { success: true, message: 'OTP verified successfully' }
   } catch (error) {
     console.log('Error in verifyPhoneOTPService: ' + error.message)
@@ -31,4 +31,4 @@ async function verifyPhoneOTPService(phone, code) {
 }
 
 
-module.exports = { sendOtpPhoneService, verifyPhoneOTPService }
+module.exports = { sendOtpToPhoneService, verifyPhoneOTPService }

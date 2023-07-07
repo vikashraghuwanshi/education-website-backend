@@ -1,10 +1,11 @@
 /* eslint-disable no-undef */
-const verifyRouter = require('express').Router()
+const emailVerifyRouter = require('express').Router()
 const User = require('../models/user')
 const Token = require('../models/token')
 
 
-verifyRouter.get('/:id/verify/:token', async(request, response) => {
+
+emailVerifyRouter.get('/:id/verify/:token', async(request, response) => {
   try {
     let user = await User.findOne({ _id: request.params.id })
     if(!user) return response.status(400).json('Invalid Link')
@@ -30,4 +31,4 @@ verifyRouter.get('/:id/verify/:token', async(request, response) => {
 })
 
 
-module.exports = verifyRouter
+module.exports = emailVerifyRouter

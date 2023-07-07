@@ -4,7 +4,7 @@ const User = require('../models/user')
 const Token = require('../models/token')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-const sendEmail = require('../clients/send_email')
+const sendEmail = require('../clients/send_email_client')
 const crypto = require('crypto')
 const config = require('../utils/config')
 
@@ -18,6 +18,7 @@ const getTokenFrom = request => {
   }
   return null
 }
+
 
 
 // logged in user password change

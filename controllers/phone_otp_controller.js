@@ -1,12 +1,12 @@
-const sendOtpPhoneRouter = require('express').Router()
-const otpPhoneService = require('../services/send_otp_phone')
+const phoneOtpRouter = require('express').Router()
+const phoneOtpService = require('../services/phone_otp_service')
 
 
 
-sendOtpPhoneRouter.post('/', async (request, response) => {
+phoneOtpRouter.post('/send', async (request, response) => {
   try {
-    const result = await otpPhoneService
-      .sendOtpPhoneService(request.body.phone)
+    const result = await phoneOtpService
+      .sendOtpToPhoneService(request.body.phone)
 
     if (result.success) {
       response.status(200).json({ message: result.message })
@@ -20,9 +20,10 @@ sendOtpPhoneRouter.post('/', async (request, response) => {
 })
 
 
-sendOtpPhoneRouter.post('/verify', async (request, response) => {
+
+phoneOtpRouter.post('/verify', async (request, response) => {
   try {
-    const result = await otpPhoneService
+    const result = await phoneOtpService
       .verifyPhoneOTPService(request.body.phone,
         request.body.code)
 
@@ -38,4 +39,4 @@ sendOtpPhoneRouter.post('/verify', async (request, response) => {
 })
 
 
-module.exports = sendOtpPhoneRouter
+module.exports = phoneOtpRouter

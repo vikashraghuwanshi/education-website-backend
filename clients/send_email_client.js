@@ -1,6 +1,8 @@
 const nodemailer = require('nodemailer')
 const config = require('../utils/config')
 
+
+
 module.exports = async (email, subject, html) => {
   try {
     const transporter = nodemailer.createTransport({

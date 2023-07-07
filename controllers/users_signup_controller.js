@@ -1,14 +1,14 @@
 const bcrypt = require('bcrypt')
-const usersRouter = require('express').Router()
+const usersSignupRouter = require('express').Router()
 const User = require('../models/user')
 const Token = require('../models/token')
-const sendEmail = require('../clients/send_email')
+const sendEmail = require('../clients/send_email_client')
 const crypto = require('crypto')
 const config = require('../utils/config')
 
 
 
-usersRouter.post('/', async (request, response) => {
+usersSignupRouter.post('/', async (request, response) => {
   const { email, firstname, lastname, password } = request.body
 
   const saltRounds = 10
@@ -27,10 +27,12 @@ usersRouter.post('/', async (request, response) => {
   if(foundUser) {
     if(foundUser.login_by === 'google') {
       user._id = foundUser._id
-      User.findByIdAndUpdate(user._id, user)
-        .then(updatedUser => {
-          response.status(201).json(updatedUser)
-        })
+      user.verified = true
+      await User.findByIdAndUpdate(user._id, user)
+
+      return response.status(401).json({
+        error: 'Account Created!!!'
+      })
     } else {
       return response.status(400).json({
         error : 'Email Already Exists!!!'
@@ -61,4 +63,4 @@ usersRouter.post('/', async (request, response) => {
 })
 
 
-module.exports = usersRouter
+module.exports = usersSignupRouter

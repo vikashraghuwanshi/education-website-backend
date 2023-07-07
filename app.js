@@ -5,13 +5,13 @@ const mongoose = require('mongoose')
 const config = require('./utils/config')
 const logger = require('./utils/logger')
 const middleware = require('./utils/middleware')
-const usersRouter = require('./controllers/users')
-const loginRouter = require('./controllers/login')
-const verifyRouter = require('./controllers/verify')
-const sendOtpPhoneRouter = require('./controllers/send_otp_phone')
-const changePasswordRouter = require('./controllers/change_password')
-const frontendRoutesRouter = require('./controllers/frontend_routes')
-const resetLinkVerifyRouter = require('./controllers/reset_link_verify')
+const loginRouter = require('./controllers/login_controller')
+const phoneOtpRouter = require('./controllers/phone_otp_controller')
+const usersSignupRouter = require('./controllers/users_signup_controller')
+const emailVerifyRouter = require('./controllers/email_verify_controller')
+const changePasswordRouter = require('./controllers/change_password_controller')
+const frontendRoutesRouter = require('./controllers/frontend_routes_controller')
+const resetLinkVerifyRouter = require('./controllers/reset_link_verify_controller')
 
 
 
@@ -32,12 +32,13 @@ app.use(express.static('build'))
 app.use(express.json())
 app.use(middleware.requestLogger)
 
-app.use('/api/users', verifyRouter)
+
 app.use('/api/login-user', loginRouter)
-app.use('/api/add-user', usersRouter)
+app.use('/api/users', emailVerifyRouter)
+app.use('/api/phone-otp', phoneOtpRouter)
+app.use('/api/add-user', usersSignupRouter)
 app.use('/api/update-password', changePasswordRouter)
 app.use('/api/reset-link-verify', resetLinkVerifyRouter)
-app.use('/api/send-otp-phone', sendOtpPhoneRouter)
 
 
 // Handle all other routes and return the main React application

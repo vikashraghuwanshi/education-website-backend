@@ -2,6 +2,7 @@
 require('dotenv').config()
 
 const PORT = process.env.PORT
+const SECRET = process.env.SECRET
 const MONGODB_URI = process.env.MONGODB_URI
 const BACKEND_HOST = process.env.BACKEND_HOST
 const FRONTEND_HOST = process.env.FRONTEND_HOST
@@ -18,6 +19,7 @@ const TWILIO_SERVICE_SID=process.env.TWILIO_SERVICE_SID
 module.exports = {
   MONGODB_URI,
   PORT,
+  SECRET,
   BACKEND_HOST,
   FRONTEND_HOST,
   HOST,
